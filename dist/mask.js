@@ -1,7 +1,7 @@
 /*!
  * angular-ui-mask
  * https://github.com/angular-ui/ui-mask
- * Version: 1.8.7 - 2016-07-26T15:59:07.992Z
+ * Version: 1.8.7 - 2016-09-14T05:50:50.404Z
  * License: MIT
  */
 
@@ -454,12 +454,14 @@ angular.module('ui.mask', [])
                                     if (!isValid || value.length === 0) {
                                         valueMasked = '';
                                         iElement.val('');
-                                        scope.$apply(function() {
-                                            //only $setViewValue when not $pristine to avoid changing $pristine state.
-                                            if (!controller.$pristine) {
-                                                controller.$setViewValue('');
-                                            }
-                                        });
+                                        if(!scope.$$phase && !scope.$root.$$phase) {
+                                            scope.$apply(function() {
+                                                //only $setViewValue when not $pristine to avoid changing $pristine state.
+                                                if (!controller.$pristine) {
+                                                    controller.$setViewValue('');
+                                                }
+                                            });
+                                        }
                                     }
                                 }
                                 //Check for different value and trigger change.
