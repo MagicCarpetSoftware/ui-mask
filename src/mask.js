@@ -314,9 +314,11 @@ angular.module('ui.mask', [])
                                     if (!isValid || value.length === 0) {
                                         valueMasked = '';
                                         iElement.val('');
-                                        scope.$apply(function() {
-                                            controller.$setViewValue('');
-                                        });
+                                        if(!scope.$$phase && !scope.$root.$$phase) {
+                                            scope.$apply(function() {
+                                                controller.$setViewValue('');
+                                            });
+                                        }
                                     }
                                 }
                             }

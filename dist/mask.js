@@ -1,7 +1,7 @@
 /*!
  * angular-ui-mask
  * https://github.com/angular-ui/ui-mask
- * Version: 1.4.5 - 2015-09-04T09:04:37.010Z
+ * Version: 1.4.5 - 2016-09-15T01:00:17.242Z
  * License: MIT
  */
 
@@ -324,9 +324,11 @@ angular.module('ui.mask', [])
                                     if (!isValid || value.length === 0) {
                                         valueMasked = '';
                                         iElement.val('');
-                                        scope.$apply(function() {
-                                            controller.$setViewValue('');
-                                        });
+                                        if(!scope.$$phase && !scope.$root.$$phase) {
+                                            scope.$apply(function() {
+                                                controller.$setViewValue('');
+                                            });
+                                        }
                                     }
                                 }
                             }
